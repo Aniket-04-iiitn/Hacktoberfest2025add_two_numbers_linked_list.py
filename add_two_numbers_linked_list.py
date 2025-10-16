@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, data):
+    def _init_(self, data):
         self.data = data
         self.next = None
 
@@ -18,11 +18,16 @@ def add_two_numbers(l1, l2):
         current.next = Node(total % 10)
         current = current.next
 
-        # ❌ Missing condition checks before moving next
-        l1 = l1.next
-        l2 = l2.next
+        # ✅ Move pointers only if they exist
+        if l1:
+            l1 = l1.next
+        if l2:
+            l2 = l2.next
 
-    # ❌ Missing final carry node if carry != 0
+    # ✅ Handle leftover carry
+    if carry > 0:
+        current.next = Node(carry)
+
     return dummy.next
 
 
@@ -45,4 +50,4 @@ b1.next = Node(6)
 b1.next.next = Node(4)
 
 result = add_two_numbers(a1, b1)
-print_list(result)  # Expected: 7 → 0 → 8 (342 + 465 = 807)
+print_list(result)  # ✅ Expected Output: 7 → 0 → 8 → None
